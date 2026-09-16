@@ -37,8 +37,8 @@ jobs:
 
       - name: Build static web assets
         run: |
-          # Builds static HTML/CSS site into the 'public' directory
-          cook build web -- --output public
+          # Builds static HTML/CSS site into the default '_site' directory
+          cook build web
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -46,7 +46,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'public'
+          path: './_site'
 
       - name: Deploy to GitHub Pages
         id: deployment
