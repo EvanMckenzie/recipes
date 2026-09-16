@@ -1,0 +1,52 @@
+name: Deploy Cooklang Site to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Runs automatically whenever you push to main
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+# Set permissions for GITHUB_TOKEN to deploy to Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install CookCLI
+        run: |
+          mkdir -p ~/.local/bin
+          curl -fsSL https://raw.githubusercontent.com/cooklang/CookCLI/main/install.sh | sh
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Build static web assets
+        run: |
+          # Builds static HTML/CSS site into the 'public' directory
+          cook build web --output public
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'public'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
