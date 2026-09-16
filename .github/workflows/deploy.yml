@@ -31,7 +31,7 @@ jobs:
       - name: Install CookCLI
         run: |
           mkdir -p ~/.local/bin
-          curl -fsSL https://github.com/cooklang/CookCLI/releases/latest/download/cook-linux-amd64.tar.gz | tar xz -C ~/.local/bin
+          curl -fsSL "https://github.com/cooklang/cookcli/releases/latest/download/cook-x86_64-unknown-linux-musl.tar.gz" | tar xz -C ~/.local/bin
           chmod +x ~/.local/bin/cook
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
