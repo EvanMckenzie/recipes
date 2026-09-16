@@ -31,13 +31,14 @@ jobs:
       - name: Install CookCLI
         run: |
           mkdir -p ~/.local/bin
-          curl -fsSL https://raw.githubusercontent.com/cooklang/CookCLI/main/install.sh | sh
+          curl -fsSL https://github.com/cooklang/CookCLI/releases/latest/download/cook-linux-amd64.tar.gz | tar xz -C ~/.local/bin
+          chmod +x ~/.local/bin/cook
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Build static web assets
         run: |
           # Builds static HTML/CSS site into the 'public' directory
-          ~/.local/bin/cook build web --output public
+          cook build web --output public
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
