@@ -37,7 +37,7 @@ jobs:
       - name: Build static web assets
         run: |
           # Builds static HTML/CSS site into the 'public' directory
-          cook build web --output public
+          ~/.local/bin/cook build web --output public
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
